@@ -14,6 +14,7 @@ function App() {
         <Route path="/event/create" element={<HelpRequestForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/events" element={<Events />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>

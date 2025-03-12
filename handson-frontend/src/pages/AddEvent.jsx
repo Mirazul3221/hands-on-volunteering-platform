@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import Logo from "../components/Logo";
 
 const HelpRequestForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  // const [date, setDate] = useState("");
+  // const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("Others");
   const [urgency, setUrgency] = useState("Medium");
@@ -22,8 +23,8 @@ const HelpRequestForm = () => {
     const newRequest = {
       title,
       description,
-      date,
-      time,
+      // date,
+      // time,
       location,
       category,
       urgency,
@@ -42,8 +43,8 @@ const HelpRequestForm = () => {
         // Reset form fields
         setTitle("");
         setDescription("");
-        setDate("");
-        setTime("");
+        // setDate("");
+        // setTime("");
         setLocation("");
         setCategory("Others");
         setUrgency("Medium");
@@ -57,7 +58,8 @@ const HelpRequestForm = () => {
 
   return (
     <div className="mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
-      <h2 className="text-2xl font-semibold text-center mb-6">Create a Request</h2>
+      <Logo/>
+      <h2 className="text-2xl font-semibold mb-6">Create a Request</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">Title:</label>
@@ -80,7 +82,7 @@ const HelpRequestForm = () => {
             rows="4"
           />
         </div>
-
+{/* 
         <div className="mb-4 grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Date:</label>
@@ -103,7 +105,7 @@ const HelpRequestForm = () => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">Location:</label>

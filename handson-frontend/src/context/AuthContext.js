@@ -5,13 +5,14 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
+  const [token,setToken] = useState(null)
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
+    const tokenId = localStorage.getItem("token");
+    setToken(tokenId)
+    if (tokenId) {
       axios
         .get("http://localhost:5000/api/auth/user", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${tokenId}` },
         })
         .then((res) => {
             setUser(res.data.user)
@@ -34,7 +35,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
