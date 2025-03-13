@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import Logo from "../components/Logo";
 
 const HelpRequestForm = () => {
   const [title, setTitle] = useState("");
@@ -58,7 +57,6 @@ const HelpRequestForm = () => {
 
   return (
     <div className="mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
-      <Logo/>
       <h2 className="text-2xl font-semibold mb-6">Create a Request</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

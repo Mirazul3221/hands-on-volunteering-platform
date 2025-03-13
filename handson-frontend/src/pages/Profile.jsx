@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Logo from "../components/Logo";
-import Footer from "../components/Footer";
 
 const Profile = () => {
   const token = localStorage.getItem("token");
@@ -86,7 +84,6 @@ const Profile = () => {
   // console.log(user?.volunteerHistory[0].eventId);
   return (
     <div className="">
-      <Logo />
 
       <div className="relative h-fit -z-10 mt-4">
         <img className="w-fit" src="/background-3.jpg" alt="gh" />
@@ -346,7 +343,6 @@ const Profile = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
