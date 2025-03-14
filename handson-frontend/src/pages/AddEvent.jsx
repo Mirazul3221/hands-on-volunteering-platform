@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import ProtectRoute from "../components/ProtectRoute";
+import Header from "../components/Header";
 
 const HelpRequestForm = () => {
   const [title, setTitle] = useState("");
@@ -56,8 +58,10 @@ const HelpRequestForm = () => {
   };
 
   return (
-    <div className="mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
-      <h2 className="text-2xl font-semibold mb-6">Create a Request</h2>
+      <ProtectRoute>
+            <div className="mx-auto bg-white px-8 rounded-lg shadow-lg mt-10">
+            <Header/>
+      <h2 className="text-2xl font-semibold text-center mb-6">Create a Request</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">Title:</label>
@@ -165,6 +169,7 @@ const HelpRequestForm = () => {
         </div>
       </form>
     </div>
+      </ProtectRoute>
   );
 };
 

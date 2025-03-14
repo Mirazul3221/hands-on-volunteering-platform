@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ProtectRoute from "../components/ProtectRoute";
+import Header from "../components/Header";
 
 const Profile = () => {
   const token = localStorage.getItem("token");
@@ -83,17 +85,20 @@ const Profile = () => {
 
   // console.log(user?.volunteerHistory[0].eventId);
   return (
-    <div className="">
-
+     <ProtectRoute>
+         <div>
+          <div className="px-4">
+          <Header/>
+          </div>
       <div className="relative h-fit -z-10 mt-4">
         <img className="w-fit" src="/background-3.jpg" alt="gh" />
       </div>
-      <div className="flex">
-        <div className="bio w-1/2 rounded-tr-[350px] shadow-md px-10 -mt-20 pb-20 z-10 bg-gray-50">
+      <div className="md:flex">
+        <div className="bio md:w-1/2 md:rounded-tr-[350px] shadow-md px-10 -mt-20 pb-20 z-10 md:bg-gray-50">
           <div className="w-2/3 mx-auto">
             <div className="w-48 mx-auto relative">
               <img
-                className="w-48 h-48 rounded-full bg-white border-4 border-gray-100"
+                className="md:w-48 md:h-48 rounded-full bg-white border-4 border-gray-100"
                 src={user?.profilePicture}
                 alt="gh"
               />
@@ -104,7 +109,7 @@ const Profile = () => {
                 Edit
               </div>
             </div>
-            <h2 className="text-5xl text-center">{user?.name}</h2>
+            <h2 className="md:text-5xl text-2xl text-center">{user?.name}</h2>
           </div>
           <div className="desc mt-4">
             <p>
@@ -202,7 +207,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/2 px-10">
+        <div className="md:w-1/2 px-10">
           <div className="flex justify-between mt-4">
             <h2
               className={`bg-gray-50 w-full border text-2xl text-center px-6 py-1 rounded-md`}
@@ -213,7 +218,7 @@ const Profile = () => {
 
           {eventStatus === "events" && (
             <div>
-              {events?.map((event) => (
+              {events && events?.map((event) => (
                 <div
                   key={event._id}
                   className={`border border-gray-300 mt-4 rounded-2xl p-4 mb-2 shadow-md ${
@@ -264,6 +269,10 @@ const Profile = () => {
               ))}
             </div>
           )}
+
+          {
+            events?.length === 0 && <h2 className="mt-4 text-center">Data not found</h2>
+          }
         </div>
       </div>
       <div
@@ -273,7 +282,7 @@ const Profile = () => {
             : "hidden"
         } mx-auto p-6 rounded-lg shadow-md`}
       >
-        <div className="w-1/2 bg-white relative p-6 shadow-lg rounded-md">
+        <div className="md:w-1/2 bg-white relative p-6 shadow-lg rounded-md">
           <h3
             onClick={() => {
               setOpenWindow(false);
@@ -344,6 +353,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
+     </ProtectRoute>
   );
 };
 

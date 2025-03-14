@@ -74,7 +74,7 @@ const EventContainer = ({ event, user }) => {
     <div>
       <div
         key={event._id}
-        className={`border border-gray-300 mt-4 rounded-2xl p-4 mb-2 shadow-md ${
+        className={`border border-gray-300 mt-1 rounded-2xl p-4 mb-2 shadow-md ${
           event.urgency === "Urgent"
             ? "bg-rose-50"
             : event.urgency === "Medium"
@@ -107,50 +107,47 @@ const EventContainer = ({ event, user }) => {
         <p>
           <strong>Date:</strong> {event?.createdAt}
         </p>
-        <div className="flex gap-2 items-center">
-          <h2 className="hover:bg-gray-200 font-semibold text-gray-700 duration-300 bg-white w-fit px-4 py-1 rounded-md border border-gray-300">
-            category : <span className="font-thin">{event?.category}</span>
-          </h2>
-          <h2 className="hover:bg-gray-200 font-semibold text-gray-700 duration-300 bg-white w-fit px-4 py-1 rounded-md border border-gray-300">
-            Location : <span className="font-thin">{event?.location}</span>
-          </h2>
-          <h2
-            className={`${
-              event.urgency === "Urgent"
-                ? "bg-rose-200"
-                : event.urgency === "Medium"
-                ? "bg-yellow-200"
-                : "bg-green-200"
-            } font-semibold text-gray-700 duration-300 w-fit px-4 py-1 rounded-md border border-gray-300`}
-          >
-            {event.urgency}
-          </h2>
-          <h2
-            onClick={() => {
-              handleAttendees(event.attendees);
-            }}
-            title="Click here to see the total attendees "
-            className="hover:bg-gray-200 duration-300 bg-white w-fit px-4 py-1 cursor-pointer rounded-md border border-gray-300"
-          >
-            Total joined : {event.attendees.length}
-          </h2>
-          <button
-            onClick={() => {
-              handleJoinButton();
-            }}
-            className="hover:bg-gray-200 duration-300 bg-white w-fit px-4 py-1 cursor-pointer rounded-md border border-gray-300"
-          >
-            Join Now
-          </button>
-          {event?.userComments.length === 0 && (
-            <button 
-              onClick={() => setCommentWindow(!commentWindow)}
-              className="hover:bg-gray-200 duration-300 bg-white w-fit px-4 py-1 cursor-pointer rounded-md border border-gray-300"
-            >
-              Leave a comment
-            </button>
-          )}
-        </div>
+        <div className="flex flex-wrap gap-2 items-center">
+  <h2 className="hover:bg-gray-200 flex-shrink font-semibold text-gray-700 duration-300 bg-white px-4 py-1 rounded-md border border-gray-300">
+    Category: <span className="font-thin">{event?.category}</span>
+  </h2>
+  <h2 className="hover:bg-gray-200 font-semibold text-gray-700 duration-300 bg-white px-4 py-1 rounded-md border border-gray-300">
+    Location: <span className="font-thin">{event?.location}</span>
+  </h2>
+  <h2
+    className={`${
+      event.urgency === "Urgent"
+        ? "bg-rose-200"
+        : event.urgency === "Medium"
+        ? "bg-yellow-200"
+        : "bg-green-200"
+    } font-semibold text-gray-700 duration-300 px-4 py-1 rounded-md border border-gray-300`}
+  >
+    {event.urgency}
+  </h2>
+  <h2
+    onClick={() => handleAttendees(event.attendees)}
+    title="Click here to see the total attendees"
+    className="hover:bg-gray-200 duration-300 bg-white px-4 py-1 cursor-pointer rounded-md border border-gray-300"
+  >
+    Total joined: {event.attendees.length}
+  </h2>
+  <button
+    onClick={() => handleJoinButton()}
+    className="hover:bg-gray-200 duration-300 bg-white px-4 py-1 cursor-pointer rounded-md border border-gray-300"
+  >
+    Join Now
+  </button>
+  {event?.userComments.length === 0 && (
+    <button 
+      onClick={() => setCommentWindow(!commentWindow)}
+      className="hover:bg-gray-200 duration-300 bg-white px-4 py-1 cursor-pointer rounded-md border border-gray-300"
+    >
+      Leave a comment
+    </button>
+  )}
+</div>
+
         {commentWindow && (
           <div className="flex mt-4 gap-4">
             <input value={comment}

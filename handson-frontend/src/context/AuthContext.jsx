@@ -2,7 +2,6 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext();
-
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token,setToken] = useState(null)
@@ -20,7 +19,10 @@ const AuthProvider = ({ children }) => {
         .catch(() => {
             localStorage.removeItem("token")
         });
+    } else {
+        // navigate('/')
     }
+
   }, []);
 
   const login = async (email, password) => {
