@@ -11,7 +11,7 @@ const EventContainer = ({ event, user }) => {
   const handleJoinButton = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/events/join/${event._id}`,
+        `https://handson-backend-sigma.vercel.app/api/events/join/${event._id}`,
         "",
         {
           headers: {
@@ -40,7 +40,7 @@ const EventContainer = ({ event, user }) => {
   const handleCommentSubmit = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/events/comment/`,
+        `https://handson-backend-sigma.vercel.app/api/events/comment/`,
         { comment, eventId: event._id },
         {
           headers: {

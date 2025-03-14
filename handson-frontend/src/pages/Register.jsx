@@ -14,7 +14,7 @@ const Register = () => {
     setLoading(true);
     
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+      const res = await axios.post("https://handson-backend-sigma.vercel.app/api/auth/register", formData);
       alert(res.data.message);
     } catch (err) {
       console.error(err);

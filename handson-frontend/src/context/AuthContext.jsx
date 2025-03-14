@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
     setToken(tokenId)
     if (tokenId) {
       axios
-        .get("http://localhost:5000/api/auth/user", {
+        .get("https://handson-backend-sigma.vercel.app/api/auth/user", {
           headers: { Authorization: `Bearer ${tokenId}` },
         })
         .then((res) => {
@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+    const res = await axios.post("https://handson-backend-sigma.vercel.app/api/auth/login", { email, password });
     localStorage.setItem("token", res.data.token);
     setUser(res.data.user);
   };

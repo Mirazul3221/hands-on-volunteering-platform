@@ -19,7 +19,7 @@ const Events = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/events/find", {
+      .get("https://handson-backend-sigma.vercel.app/api/events/find", {
         headers: {
           Authorization: `Bearer ${tokenRef.current}`, // Include JWT token in Authorization header
         },
@@ -45,7 +45,7 @@ const Events = () => {
     const filterData = async () => {
       await axios
         .get(
-          `http://localhost:5000/api/events/filter?category=${category}&location=${location}`,
+          `https://handson-backend-sigma.vercel.app/api/events/filter?category=${category}&location=${location}`,
           {
             headers: {
               Authorization: `Bearer ${tokenRef.current}`, // Include JWT token in Authorization header

@@ -23,7 +23,7 @@ const Profile = () => {
   useEffect(() => {
     // Fetch user data on mount
     axios
-      .get("http://localhost:5000/api/auth/user", {
+      .get("https://handson-backend-sigma.vercel.app/api/auth/user", {
         headers: {
           Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
         },
@@ -36,7 +36,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/events/findmyevent", {
+      .get("https://handson-backend-sigma.vercel.app/api/events/findmyevent", {
         headers: {
           Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
         },
@@ -62,7 +62,7 @@ const Profile = () => {
       if (user.profilePicture) {
         formData.append("profilePicture", user.profilePicture); // Append file
       }
-      const res = await axios.put("http://localhost:5000/api/auth/profile", formData, {
+      const res = await axios.put("https://handson-backend-sigma.vercel.app/api/auth/profile", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

@@ -34,7 +34,7 @@ const HelpRequestForm = () => {
 
     try {
       // Send the POST request to the backend
-      const response = await axios.post("http://localhost:5000/api/events/create", newRequest,{
+      const response = await axios.post("https://handson-backend-sigma.vercel.app/api/events/create", newRequest,{
         headers: {
           Authorization: `Bearer ${ tokenRef.current}`, // Include JWT token in Authorization header
         },
