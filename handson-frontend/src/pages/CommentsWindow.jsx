@@ -102,12 +102,9 @@ const EventContainer = ({ event, user }) => {
             <p className="text-sm">{dateFormate(event?.createdAt)}</p>
           </div>
         </div>
-        <h3 className="text-xl">{event?.title}</h3>
+        <h3 className="text-xl text-green-500 border-b border-gray-300 mb-2 pb-1">{event?.title}</h3>
         <p>{event.description}</p>
-        <p>
-          <strong>Date:</strong> {event?.createdAt}
-        </p>
-        <div className="flex flex-wrap gap-2 items-center">
+        <div className="flex flex-wrap mt-2 gap-2 items-center">
   <h2 className="hover:bg-gray-200 flex-shrink font-semibold text-gray-700 duration-300 bg-white px-4 py-1 rounded-md border border-gray-300">
     Category: <span className="font-thin">{event?.category}</span>
   </h2>
