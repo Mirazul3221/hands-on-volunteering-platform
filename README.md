@@ -96,7 +96,5 @@ Create a .env file in the backend directory and add:
 
 
 I have deployed this project on vercel the live link is below:
-
 Frontend: https://handson-volunteering-platform.vercel.app/
-
 backend : https://handson-backend-sigma.vercel.app/
