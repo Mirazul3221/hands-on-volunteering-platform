@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import axios from "axios";
+import { apiUrl } from "../config";
 const EventContainer = ({ event, user }) => {
   const [commentWindow, setCommentWindow] = useState(false);
   const tokenRef = useRef(null);
@@ -11,7 +12,7 @@ const EventContainer = ({ event, user }) => {
   const handleJoinButton = async () => {
     try {
       const { data } = await axios.post(
-        `https://handson-backend-sigma.vercel.app/api/events/join/${event._id}`,
+        `${apiUrl}/api/events/join/${event._id}`,
         "",
         {
           headers: {
@@ -40,7 +41,7 @@ const EventContainer = ({ event, user }) => {
   const handleCommentSubmit = async () => {
     try {
       const { data } = await axios.post(
-        `https://handson-backend-sigma.vercel.app/api/events/comment/`,
+        `${apiUrl}/api/events/comment/`,
         { comment, eventId: event._id },
         {
           headers: {
@@ -55,7 +56,7 @@ const EventContainer = ({ event, user }) => {
   };
 
   useEffect(() => {
-    event.userComments.map((u) => {
+    event?.userComments?.map((u) => {
       //    console.log(u)
       const name = u.user.name;
       const profile = u.user.profilePicture;
@@ -127,7 +128,7 @@ const EventContainer = ({ event, user }) => {
     title="Click here to see the total attendees"
     className="hover:bg-gray-200 duration-300 bg-white px-4 py-1 cursor-pointer rounded-md border border-gray-300"
   >
-    Total joined: {event.attendees.length}
+    Total joined: {event?.attendees?.length}
   </h2>
   <button
     onClick={() => handleJoinButton()}
@@ -135,7 +136,7 @@ const EventContainer = ({ event, user }) => {
   >
     Join Now
   </button>
-  {event?.userComments.length === 0 && (
+  {event?.userComments?.length === 0 && (
     <button 
       onClick={() => setCommentWindow(!commentWindow)}
       className="hover:bg-gray-200 duration-300 bg-white px-4 py-1 cursor-pointer rounded-md border border-gray-300"

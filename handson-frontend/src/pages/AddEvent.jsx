@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ProtectRoute from "../components/ProtectRoute";
 import Header from "../components/Header";
+import { apiUrl } from "../config";
 
 const HelpRequestForm = () => {
   const [title, setTitle] = useState("");
@@ -34,7 +35,7 @@ const HelpRequestForm = () => {
 
     try {
       // Send the POST request to the backend
-      const response = await axios.post("https://handson-backend-sigma.vercel.app/api/events/create", newRequest,{
+      const response = await axios.post(`${apiUrl}/api/events/create`, newRequest,{
         headers: {
           Authorization: `Bearer ${ tokenRef.current}`, // Include JWT token in Authorization header
         },

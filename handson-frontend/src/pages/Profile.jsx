@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import ProtectRoute from "../components/ProtectRoute";
 import Header from "../components/Header";
+import { apiUrl } from "../config";
+import EventContainer from "./CommentsWindow";
+import { AuthContext } from "../context/AuthContext";
 
 const Profile = () => {
+    const { user } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   const [events, setEvents] = useState();
   const [eventStatus, setEventStatus] = useState("events");
-  const [user, setUser] = useState({
+  const [userData, setUser] = useState({
     name: "",
     bio: "",
     skills: [],
@@ -16,14 +20,14 @@ const Profile = () => {
   });
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    setUser({ ...user, profilePicture: file });
+    setUser({ ...userData, profilePicture: file });
   };
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Fetch user data on mount
     axios
-      .get("https://handson-backend-sigma.vercel.app/api/auth/user", {
+      .get(`${apiUrl}/api/auth/user`, {
         headers: {
           Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
         },
@@ -36,7 +40,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("https://handson-backend-sigma.vercel.app/api/events/findmyevent", {
+      .get(`${apiUrl}/api/events/findmyevent`, {
         headers: {
           Authorization: `Bearer ${token}`, // Include JWT token in Authorization header
         },
@@ -46,7 +50,7 @@ const Profile = () => {
   }, [token]);
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setUser({ ...userData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -55,14 +59,14 @@ const Profile = () => {
     
     try {
       const formData = new FormData();
-      formData.append("name", user.name);
-      formData.append("bio", user.bio);
-      formData.append("skills", user.skills.join(","));
-      formData.append("causes", user.causes.join(","));
-      if (user.profilePicture) {
-        formData.append("profilePicture", user.profilePicture); // Append file
+      formData.append("name", userData.name);
+      formData.append("bio", userData.bio);
+      formData.append("skills", userData.skills.join(","));
+      formData.append("causes", userData.causes.join(","));
+      if (userData.profilePicture) {
+        formData.append("profilePicture", userData.profilePicture); // Append file
       }
-      const res = await axios.put("https://handson-backend-sigma.vercel.app/api/auth/profile", formData, {
+      const res = await axios.put(`${apiUrl}/api/auth/profile`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -99,7 +103,7 @@ const Profile = () => {
             <div className="w-48 mx-auto relative">
               <img
                 className="md:w-48 md:h-48 rounded-full bg-white border-4 border-gray-100"
-                src={user?.profilePicture}
+                src={userData?.profilePicture}
                 alt="gh"
               />
               <div
@@ -109,19 +113,19 @@ const Profile = () => {
                 Edit
               </div>
             </div>
-            <h2 className="md:text-5xl text-2xl text-center">{user?.name}</h2>
+            <h2 className="md:text-5xl text-2xl text-center">{userData?.name}</h2>
           </div>
           <div className="desc mt-4">
             <p>
-              {user?.bio !== ""
-                ? user?.bio
+              {userData?.bio !== ""
+                ? userData?.bio
                 : "No data found . Please Add your biodata"}
             </p>
             <div className="flex justify-between mt-4">
-              {user?.skills?.length === 0 && <h3>skills : Empty</h3>}
-              {user?.skills?.length !== 0 && (
+              {userData?.skills?.length === 0 && <h3>skills : Empty</h3>}
+              {userData?.skills?.length !== 0 && (
                 <div className="flex gap-2">
-                  {user?.skills.map((skl) => {
+                  {userData?.skills.map((skl) => {
                     return (
                       <h2 className="py-1 px-6 bg-gray-50 rounded-md shadow-sm">
                         {skl}
@@ -130,10 +134,10 @@ const Profile = () => {
                   })}
                 </div>
               )}
-              {user?.causes?.length === 0 && <h3>Causes : Empty</h3>}
-              {user?.causes?.length !== 0 && (
+              {userData?.causes?.length === 0 && <h3>Causes : Empty</h3>}
+              {userData?.causes?.length !== 0 && (
                 <div className="flex gap-2">
-                  {user?.causes.map((skl) => {
+                  {userData?.causes.map((skl) => {
                     return (
                       <h2 className="py-1 px-6 bg-gray-50 rounded-md shadow-sm">
                         {skl}
@@ -149,59 +153,9 @@ const Profile = () => {
             </h2>
 
             <div>
-              {user?.volunteerHistory?.map((event) => {
+              {userData?.volunteerHistory?.map((event) => {
                 return (
-                  <div
-                    key={event?.eventId._id}
-                    className={`border border-gray-300 mt-4 rounded-2xl p-4 mb-2 shadow-md ${
-                      event.eventId?.urgency === "Urgent"
-                        ? "bg-rose-50"
-                        : event.eventId?.urgency === "Medium"
-                        ? "bg-yellow-50"
-                        : "bg-green-50"
-                    } `}
-                  >
-                    <h2 className="font-semibold text-2xl mb-2 underline text-gray-700">
-                      {event?.eventId?.type}
-                    </h2>
-                    <h3 className="text-xl">{event?.title}</h3>
-                    <p>{event?.eventId?.description}</p>
-                    <p>
-                      Created by{" "}
-                      {user?._id == event.eventId?.createdBy?._id
-                        ? "you"
-                        : event?.eventId?.createdBy?.name}
-                    </p>
-                    <p>
-                      <strong>Date:</strong> {event?.eventId?.createdAt}
-                    </p>
-                    <div className="flex gap-2 items-center">
-                      <h2 className="hover:bg-gray-200 font-semibold text-gray-700 duration-300 bg-white w-fit px-4 py-1 rounded-md border border-gray-300">
-                        <span className="font-thin">
-                          {event?.eventId.category}
-                        </span>
-                      </h2>
-                      <h2 className="hover:bg-gray-200 font-semibold text-gray-700 duration-300 bg-white w-fit px-4 py-1 rounded-md border border-gray-300">
-                        <span className="font-thin">
-                          {event?.eventId?.location}
-                        </span>
-                      </h2>
-                      <h2
-                        className={`${
-                          event?.eventId?.urgency === "Urgent"
-                            ? "bg-rose-200"
-                            : event?.eventId?.urgency === "Medium"
-                            ? "bg-yellow-200"
-                            : "bg-green-200"
-                        } font-semibold text-gray-700 duration-300 w-fit px-4 py-1 rounded-md border border-gray-300`}
-                      >
-                        {event.eventId?.urgency}
-                      </h2>
-                      <h2 className="hover:bg-gray-200 duration-300 bg-white w-fit px-4 py-1 cursor-pointer rounded-md border border-gray-300">
-                        Total joined : {event?.eventId?.attendees?.length}
-                      </h2>
-                    </div>
-                  </div>
+                  <EventContainer event={event?.eventId} user={user}/>
                 );
               })}
             </div>
@@ -219,53 +173,7 @@ const Profile = () => {
           {eventStatus === "events" && (
             <div>
               {events && events?.map((event) => (
-                <div
-                  key={event._id}
-                  className={`border border-gray-300 mt-4 rounded-2xl p-4 mb-2 shadow-md ${
-                    event.urgency === "Urgent"
-                      ? "bg-rose-50"
-                      : event.urgency === "Medium"
-                      ? "bg-yellow-50"
-                      : "bg-green-50"
-                  } `}
-                >
-                  <h2 className="font-semibold text-2xl mb-2 underline text-gray-700">
-                    {event?.type}
-                  </h2>
-                  <h3 className="text-xl">{event?.title}</h3>
-                  <p>{event.description}</p>
-                  <p>
-                    Created by{" "}
-                    {user?._id == event?.createdBy?._id
-                      ? "you"
-                      : event?.createdBy?.name}
-                  </p>
-                  <p>
-                    <strong>Date:</strong> {event?.createdAt}
-                  </p>
-                  <div className="flex gap-2 items-center">
-                    <h2 className="hover:bg-gray-200 font-semibold text-gray-700 duration-300 bg-white w-fit px-4 py-1 rounded-md border border-gray-300">
-                      <span className="font-thin">{event?.category}</span>
-                    </h2>
-                    <h2 className="hover:bg-gray-200 font-semibold text-gray-700 duration-300 bg-white w-fit px-4 py-1 rounded-md border border-gray-300">
-                      <span className="font-thin">{event?.location}</span>
-                    </h2>
-                    <h2
-                      className={`${
-                        event.urgency === "Urgent"
-                          ? "bg-rose-200"
-                          : event.urgency === "Medium"
-                          ? "bg-yellow-200"
-                          : "bg-green-200"
-                      } font-semibold text-gray-700 duration-300 w-fit px-4 py-1 rounded-md border border-gray-300`}
-                    >
-                      {event.urgency}
-                    </h2>
-                    <h2 className="hover:bg-gray-200 duration-300 bg-white w-fit px-4 py-1 cursor-pointer rounded-md border border-gray-300">
-                      Total joined : {event.attendees.length}
-                    </h2>
-                  </div>
-                </div>
+                        <EventContainer event={event} user={user}/>
               ))}
             </div>
           )}
@@ -298,7 +206,7 @@ const Profile = () => {
             <input
               type="text"
               name="name"
-              value={user.name}
+              value={userData.name}
               onChange={handleChange}
               placeholder="Name"
               required
@@ -306,7 +214,7 @@ const Profile = () => {
             />
             <textarea
               name="bio"
-              value={user.bio}
+              value={userData.bio}
               onChange={handleChange}
               placeholder="Bio"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -314,9 +222,9 @@ const Profile = () => {
             <input
               type="text"
               name="skills"
-              value={user.skills.join(",")}
+              value={userData.skills.join(",")}
               onChange={(e) =>
-                setUser({ ...user, skills: e.target.value.split(",") })
+                setUser({ ...userData, skills: e.target.value.split(",") })
               }
               placeholder="Skills (comma separated)"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -324,9 +232,9 @@ const Profile = () => {
             <input
               type="text"
               name="causes"
-              value={user.causes.join(",")}
+              value={userData.causes.join(",")}
               onChange={(e) =>
-                setUser({ ...user, causes: e.target.value.split(",") })
+                setUser({ ...userData, causes: e.target.value.split(",") })
               }
               placeholder="Causes (comma separated)"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

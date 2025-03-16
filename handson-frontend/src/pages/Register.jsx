@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { apiUrl } from "../config";
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,8 +17,9 @@ const Register = () => {
     setLoading(true);
     
     try {
-      const res = await axios.post("https://handson-backend-sigma.vercel.app/api/auth/register", formData);
-      alert(res.data.message);
+      const res = await axios.post(`${apiUrl}/api/auth/register`, formData);
+      localStorage.setItem("token", res.data.token);
+      navigate('/events')
     } catch (err) {
       console.error(err);
       alert("Registration failed");

@@ -4,9 +4,11 @@ import { AuthContext } from "../context/AuthContext";
 import EventContainer from "./CommentsWindow";
 import Header from "../components/Header";
 import ProtectRoute from "../components/ProtectRoute";
+import { apiUrl } from "../config";
 
 const Events = () => {
   const { user } = useContext(AuthContext);
+  console.log(user)
   const [events, setEvents] = useState([]);
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
@@ -19,7 +21,7 @@ const Events = () => {
   }, []);
   useEffect(() => {
     axios
-      .get("https://handson-backend-sigma.vercel.app/api/events/find", {
+      .get(`${apiUrl}/api/events/find`, {
         headers: {
           Authorization: `Bearer ${tokenRef.current}`, // Include JWT token in Authorization header
         },
@@ -45,7 +47,7 @@ const Events = () => {
     const filterData = async () => {
       await axios
         .get(
-          `https://handson-backend-sigma.vercel.app/api/events/filter?category=${category}&location=${location}`,
+          `${apiUrl}/api/events/filter?category=${category}&location=${location}`,
           {
             headers: {
               Authorization: `Bearer ${tokenRef.current}`, // Include JWT token in Authorization header

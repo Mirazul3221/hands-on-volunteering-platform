@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { apiUrl } from "../config";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
@@ -10,7 +11,7 @@ const AuthProvider = ({ children }) => {
     setToken(tokenId)
     if (tokenId) {
       axios
-        .get("https://handson-backend-sigma.vercel.app/api/auth/user", {
+        .get(`${apiUrl}/api/auth/user`, {
           headers: { Authorization: `Bearer ${tokenId}` },
         })
         .then((res) => {
@@ -27,7 +28,7 @@ const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post("https://handson-backend-sigma.vercel.app/api/auth/login", { email, password });
+      const res = await axios.post(`${apiUrl}/api/auth/login`, { email, password });
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
     } catch (error) {
