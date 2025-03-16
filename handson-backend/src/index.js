@@ -24,7 +24,9 @@ connectDB();
 
 // Define your routes
 app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/events", require("./routes/eventRoutes")); // Event routes
+app.use("/api/events", require("./routes/eventRoutes")); // Event route
+app.use('/api/teams',  require('./routes/teamRoutes'));
+
 app.listen(5000, () => console.log("Server running on port 5000"));
 
 // // Export the app for Vercel

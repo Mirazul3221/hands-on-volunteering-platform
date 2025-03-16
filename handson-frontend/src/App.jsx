@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Events from "./pages/Events";
 import Profile from "./pages/Profile";
 import HelpRequestForm from "./pages/AddEvent";
+import CreateTeamForm from "./pages/CreateTeam";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/team/create" element={<CreateTeamForm />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>

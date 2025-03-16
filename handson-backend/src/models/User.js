@@ -16,6 +16,13 @@ const UserSchema = new mongoose.Schema(
         date: { type: Date, default: Date.now },
       }
     ],
+    teamHistory: [
+      {
+        eventId: { type: mongoose.Schema.Types.ObjectId, ref: "Event" }, // Events user attended
+        hoursContributed: Number, // Hours volunteered
+        date: { type: Date, default: Date.now },
+      }
+    ],
   },
   { timestamps: true } // Adds createdAt and updatedAt fields
 );
