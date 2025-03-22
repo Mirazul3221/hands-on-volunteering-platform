@@ -17,7 +17,7 @@ exports.getAllTeams = async (req, res) => {
 // Create a new team
 exports.createTeam = async (req, res) => {
   const { name, description, isPublic } = req.body;
-
+   console.log('hfgfgjhfg')
   try {
     const team = new Team({
       name,

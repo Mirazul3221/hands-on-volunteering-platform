@@ -1,8 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import Header from "../components/Header";
+import { apiUrl } from "../config";
+import { useNavigate } from "react-router-dom";
 
 const CreateTeamForm = () => {
+    const navigate = useNavigate();
   const [teamData, setTeamData] = useState({
     name: "",
     description: "",
@@ -21,12 +24,13 @@ const CreateTeamForm = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token"); // Get user token
-      const response = await axios.post("/api/teams/create", teamData, {
+      const response = await axios.post(`${apiUrl}/api/teams/create`, teamData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       alert(response.data.message);
       setTeamData({ name: "", description: "", isPublic: true });
+      navigate('/events')
     } catch (error) {
       console.error("Error creating team:", error);
       alert(error.response?.data?.message || "Failed to create team.");

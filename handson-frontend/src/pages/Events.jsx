@@ -67,9 +67,9 @@ const Events = () => {
         <div className="md:flex items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <a className="md:text-2xl  border duration-150 px-6 py-1 rounded-md shadow-sm" href="./event/create">
-                  Post a Event
+                  Create a Event
                 </a>
-                <a className="md:text-2xl  border duration-150 px-6 py-1 rounded-md shadow-sm"  href="./event/create">
+                <a className="md:text-2xl  border duration-150 px-6 py-1 rounded-md shadow-sm"  href="./team/create">
                   Create a team
                 </a>
               </div>
